@@ -1,45 +1,67 @@
-#include "rpg/entities/Character.h"
+#include "Rpg/Entities/Character.h"
 
-#include "rpg/entities/Entity.h"
+#include "Rpg/Items/Weapon.h"
+#include "Rpg/Items/Armor.h"
 
-#include <string>
+#include <optional>
 
-namespace rpg::entities
+namespace Rpg
 {
 
-Character::Character(const EntityAttributes& entityAttr,
-                     const CharacterAttributes& characterAttr)
-    : Entity{entityAttr}, characterAttr_{characterAttr}
+void Character::equipWeapon(Weapon weapon)
 {
-}
+  if (!m_weapons.contains(weapon)) return;
 
-std::string Character::getCharacterTypeName(const CharacterType type)
-{
-  switch (type)
+  unequipWeapon();
+
+  m_weapons.remove(weapon);
+  m_equipment.weapon = weapon;
+
+  if (weapon.modifier().has_value())
   {
-  case CharacterType::Warrior:
-    return "Warrior";
-
-  case CharacterType::Sorcerer:
-    return "Sorcerer";
-
-  case CharacterType::Deprived:
-    return "Deprived";
-
-  default:
-    return "Unknown";
+    m_modifiers.add(*weapon.modifier());
   }
 }
 
-int Character::getMaxHealth() const { return characterAttr_.vitality; }
-
-int Character::getMaxEquipLoad() const { return characterAttr_.endurance; }
-
-int Character::getCurrentEquipLoad() const { return 0; }
-
-double Character::getEquipLoadRatio() const
+void Character::unequipWeapon()
 {
-  return static_cast<double>(getCurrentEquipLoad()) / getMaxEquipLoad();
+  if (!m_equipment.weapon.has_value()) return;
+
+  if (m_equipment.weapon->modifier().has_value())
+  {
+    m_modifiers.remove(*m_equipment.weapon->modifier());
+  }
+
+  m_weapons.add(*m_equipment.weapon);
+  m_equipment.weapon.reset();
 }
 
-} // namespace rpg::entities
+void Character::equipArmor(Armor armor)
+{
+  if (!m_armor.contains(armor)) return;
+
+  unequipArmor();
+
+  m_armor.remove(armor);
+  m_equipment.armor = armor;
+
+  if (armor.modifier().has_value())
+  {
+    m_modifiers.add(*armor.modifier());
+  }
+}
+
+void Character::unequipArmor()
+{
+  if (!m_equipment.armor.has_value()) return;
+
+  if (m_equipment.armor->modifier().has_value())
+  {
+    m_modifiers.remove(*m_equipment.armor->modifier());
+  }
+
+  m_armor.add(*m_equipment.armor);
+  m_equipment.armor.reset();
+}
+
+} // namespace Rpg

@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Rpg/Components/IdComponent.h"
-
 #include <algorithm>
-#include <optional>
+#include <functional>
 #include <vector>
 
 namespace Rpg
@@ -13,6 +11,16 @@ template <typename T>
 class ContainerComponent
 {
 public:
+  const std::vector<T>& items() const { return m_items; }
+
+  bool contains(const T& item)
+  {
+    return std::ranges::any_of(m_items, [&item](const T& comp)
+    {
+      return item.id() == comp.id();
+    });
+  }
+
   void add(const T& item)
   {
     m_items.push_back(item);
@@ -26,13 +34,9 @@ public:
     });
   }
 
-  std::optional<IdComponent> get(const T& item)
+  void sort()
   {
-    auto it {std::ranges::find(m_items, item, &T::id)};
-
-    if (it != m_items.end()) return it->id();
-
-    return std::nullopt;
+    std::ranges::stable_sort(m_items, std::greater {}, &T::sortKey);
   }
 
 private:

@@ -4,26 +4,29 @@
 #include "Rpg/Components/Attributes/StrengthComponent.h"
 #include "Rpg/Components/StatusModifierComponent.h"
 
+#include <optional>
+
 namespace Rpg
 {
 
 class Weapon
 {
 public:
-  Weapon(IdComponent id,
-         StatusModifierComponent modifier,
-         StrengthComponent strength)
-      : m_id {id},
-        m_modifier {modifier},
-        m_strength {strength} {}
+  explicit Weapon(IdComponent id) : m_id {id}
+  {
+  }
 
   IdComponent id() const { return m_id; }
+  StrengthComponent sortKey() const { return m_strength; }
+
+  StrengthComponent strength() const { return m_strength; }
+  std::optional<StatusModifierComponent> modifier() const { return m_modifier; }
 
 private:
   IdComponent m_id;
 
   StrengthComponent m_strength;
-  StatusModifierComponent m_modifier;
+  std::optional<StatusModifierComponent> m_modifier;
 };
 
 } // namespace Rpg

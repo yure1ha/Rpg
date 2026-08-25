@@ -11,8 +11,8 @@
 #include "Rpg/Items/Weapon.h"
 #include "Rpg/Items/Armor.h"
 
-#include "Rpg/Components/ContainerComponent.h"
-
+#include "Rpg/Components/Containers/ContainerComponent.h"
+#include "Rpg/Components/Containers/EquipmentComponent.h"
 
 namespace Rpg
 {
@@ -20,24 +20,16 @@ namespace Rpg
 class Character
 {
 public:
-  Character(IdComponent id,
-            HealthComponent health,
-            StrengthComponent strength,
-            DefenseComponent defense,
-            ActiveModifiersComponent modifiers,
-            ContainerComponent<Consumable> consumables,
-            ContainerComponent<Weapon> weapons,
-            ContainerComponent<Armor> armor)
-      : m_id {id},
-        m_health {health},
-        m_strength {strength},
-        m_defense {defense},
-        m_modifiers {modifiers},
-        m_consumables {consumables},
-        m_weapons {weapons},
-        m_armor {armor} {}
+  explicit Character(IdComponent id) : m_id {id}
+  {
+  }
 
   IdComponent id() const { return m_id; }
+
+  void equipWeapon(Weapon weapon);
+  void unequipWeapon();
+  void equipArmor(Armor armor);
+  void unequipArmor();
 
 private:
   IdComponent m_id;
@@ -51,6 +43,8 @@ private:
   ContainerComponent<Consumable> m_consumables;
   ContainerComponent<Weapon> m_weapons;
   ContainerComponent<Armor> m_armor;
+
+  EquipmentComponent m_equipment;
 };
 
 } // namespace Rpg

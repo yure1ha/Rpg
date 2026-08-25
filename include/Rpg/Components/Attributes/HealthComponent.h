@@ -33,17 +33,21 @@ public:
 
   void heal(std::int32_t amount)
   {
-    assert(amount > 0);
+    if (amount <= 0) return;
+
     m_current += amount;
     clamp();
+
     assert(isValid());
   }
 
   void takeDamage(std::int32_t amount)
   {
-    assert(amount > 0);
+    if (amount <= 0) return;
+
     m_current -= amount;
     clamp();
+
     assert(isValid());
   }
 

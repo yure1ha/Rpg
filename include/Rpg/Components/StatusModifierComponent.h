@@ -1,12 +1,10 @@
 #pragma once
 
-#include <algorithm>
 #include <cassert>
 #include <cstdint>
-#include <vector>
 
+#include "Attributes/StackComponent.h"
 #include "Rpg/Components/IdComponent.h"
-#include "Rpg/Components/StackComponent.h"
 
 namespace Rpg
 {
@@ -14,7 +12,7 @@ namespace Rpg
 class StatusModifierComponent
 {
 public:
-  StatusModifierComponent(IdComponent id = {},
+  StatusModifierComponent(IdComponent id,
                           std::int32_t flatModifier = kMinFlatModifier,
                           float multiplier = kMinMultiplier)
       : m_id {id},
