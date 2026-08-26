@@ -12,14 +12,14 @@ add_library(Rpg
         include/Rpg/Components/Attributes/StrengthComponent.h
         include/Rpg/Components/Attributes/StackComponent.h
         include/Rpg/Components/StatusModifierComponent.h
-        include/Rpg/Components/ActiveModifiersComponent.h
         include/Rpg/Components/Containers/ContainerComponent.h
         include/Rpg/Components/Containers/EquipmentComponent.h
-        include/Rpg/Entities/Character.h
         src/Entities/Character.cpp
         include/Rpg/Items/Consumable.h
         include/Rpg/Items/Weapon.h
         include/Rpg/Items/Armor.h
+        include/Rpg/Entities/Character.h
+        include/Rpg/Entities/Enemy.h
 )
 
 target_include_directories(Rpg PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

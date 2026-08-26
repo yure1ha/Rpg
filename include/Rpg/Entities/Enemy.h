@@ -6,9 +6,6 @@
 #include "Rpg/Components/Attributes/StrengthComponent.h"
 #include "Rpg/Components/Attributes/DefenseComponent.h"
 
-#include "Rpg/Items/Consumable.h"
-#include "Rpg/Items/Weapon.h"
-#include "Rpg/Items/Armor.h"
 #include "Rpg/Components/StatusModifierComponent.h"
 
 #include "Rpg/Components/Containers/ContainerComponent.h"
@@ -17,21 +14,14 @@
 namespace Rpg
 {
 
-class Character
+class Enemy
 {
 public:
-  explicit Character(IdComponent id) : m_id {id}
+  explicit Enemy(IdComponent id) : m_id {id}
   {
   }
 
   IdComponent id() const { return m_id; }
-
-  void equipWeapon(Weapon weapon);
-  void unequipWeapon();
-  void equipArmor(Armor armor);
-  void unequipArmor();
-
-  void useConsumable(Consumable consumable);
 
 private:
   IdComponent m_id;
@@ -40,11 +30,7 @@ private:
   StrengthComponent m_strength;
   DefenseComponent m_defense;
 
-  ContainerComponent<Consumable> m_consumables;
-  ContainerComponent<Weapon> m_weapons;
-  ContainerComponent<Armor> m_armor;
   ContainerComponent<StatusModifierComponent> m_modifiers;
-
   EquipmentComponent m_equipment;
 };
 

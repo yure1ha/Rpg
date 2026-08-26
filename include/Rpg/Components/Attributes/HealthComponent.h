@@ -31,7 +31,7 @@ public:
     m_current = std::clamp(m_current, kMinHealth, m_base);
   }
 
-  void heal(std::int32_t amount)
+  void increase(std::int32_t amount)
   {
     if (amount <= 0) return;
 
@@ -41,7 +41,7 @@ public:
     assert(isValid());
   }
 
-  void takeDamage(std::int32_t amount)
+  void decrease(std::int32_t amount)
   {
     if (amount <= 0) return;
 

@@ -64,4 +64,16 @@ void Character::unequipArmor()
   m_equipment.armor.reset();
 }
 
+void Character::useConsumable(Consumable consumable)
+{
+  if (!m_consumables.contains(consumable)) return;
+
+  m_consumables.remove(consumable);
+
+  if (consumable.modifier().has_value())
+  {
+    m_modifiers.add(*consumable.modifier());
+  }
+}
+
 } // namespace Rpg

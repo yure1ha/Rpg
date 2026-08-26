@@ -1,10 +1,10 @@
 #pragma once
 
+#include "Rpg/Components/IdComponent.h"
+#include "Attributes/StackComponent.h"
+
 #include <cassert>
 #include <cstdint>
-
-#include "Attributes/StackComponent.h"
-#include "Rpg/Components/IdComponent.h"
 
 namespace Rpg
 {
@@ -30,11 +30,6 @@ public:
   IdComponent id() const { return m_id; }
   std::int32_t flatModifier() const { return m_flatModifier; }
   float multiplier() const { return m_multiplier; }
-
-  bool operator==(const StatusModifierComponent& comp) const
-  {
-    return m_id == comp.m_id;
-  }
 
 private:
   IdComponent m_id;
