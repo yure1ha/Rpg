@@ -1,7 +1,6 @@
 #pragma once
 
 #include <algorithm>
-#include <cassert>
 #include <cstdint>
 
 namespace Rpg
@@ -10,11 +9,14 @@ namespace Rpg
 class HealthComponent
 {
 public:
-  HealthComponent(std::int32_t current = kMinHealth, std::int32_t base = kMinHealth)
-      : m_current {current}, m_base {base}
+  HealthComponent(std::int32_t current = kMinHealth,
+                  std::int32_t effective = kMinHealth,
+                  std::int32_t base = kMinHealth)
+      : m_current {current},
+        m_effective {effective},
+        m_base {base}
   {
     clamp();
-    assert(isValid());
   }
 
   static constexpr std::int32_t kMinHealth {0};
@@ -27,48 +29,57 @@ public:
 
   void clamp()
   {
-    m_base = std::clamp(m_base, kMinHealth, kMaxHealth);
     m_current = std::clamp(m_current, kMinHealth, m_base);
+    m_effective = std::clamp(m_effective, kMinHealth, kMaxHealth);
+    m_base = std::clamp(m_base, kMinHealth, kMaxHealth);
   }
 
   void increase(std::int32_t amount)
   {
     if (amount <= 0) return;
 
-    m_current += amount;
+    m_effective += amount;
     clamp();
-
-    assert(isValid());
   }
 
   void decrease(std::int32_t amount)
   {
     if (amount <= 0) return;
 
+    m_effective -= amount;
+    clamp();
+  }
+
+  void heal(std::int32_t amount)
+  {
+    if (amount <= 0) return;
+
+    m_current += amount;
+    clamp();
+  }
+
+  void takeDamage(std::int32_t amount)
+  {
+    if (amount <= 0) return;
+
     m_current -= amount;
     clamp();
+  }
 
-    assert(isValid());
+  void fullHeal()
+  {
+    m_current = m_effective;
   }
 
   void reset()
   {
-    m_current = m_base;
-    assert(isValid());
+    m_effective = m_base;
   }
 
 private:
   std::int32_t m_current {};
+  std::int32_t m_effective {};
   std::int32_t m_base {};
-
-  bool isValid() const
-  {
-    return m_current <= m_base
-        && m_current >= kMinHealth
-        && m_current <= kMaxHealth
-        && m_base    >= kMinHealth
-        && m_base    <= kMaxHealth;
-  }
 };
 
 } // namespace Rpg

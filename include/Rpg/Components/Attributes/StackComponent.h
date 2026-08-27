@@ -1,6 +1,6 @@
 #pragma once
+
 #include <algorithm>
-#include <cassert>
 #include <cstdint>
 
 namespace Rpg
@@ -9,52 +9,45 @@ namespace Rpg
 class StackComponent
 {
 public:
-  StackComponent(std::int32_t currentAmount = kMinAmount,
-                 std::int32_t maxAmount = kMaxAmount)
-      : m_currentAmount {currentAmount},
-        m_maxAmount {maxAmount}
+  StackComponent(std::int32_t current = kMinAmount,
+                 std::int32_t max = kMaxAmount)
+      : m_current {current},
+        m_max {max}
   {
-    assert(isValid());
+    clamp();
   }
 
   static constexpr std::int32_t kMinAmount {0};
   static constexpr std::int32_t kMaxAmount {999};
 
-  std::int32_t currentQuantity() const { return m_currentAmount; }
-  std::int32_t maxQuantity() const { return m_maxAmount; }
+  std::int32_t current() const { return m_current; }
+  std::int32_t max() const { return m_max; }
 
   void clamp()
   {
-    m_currentAmount = std::clamp(m_currentAmount, kMinAmount, kMaxAmount);
+    m_current = std::clamp(m_current, kMinAmount, kMaxAmount);
+    m_max = std::clamp(m_max, kMinAmount, kMaxAmount);
   }
 
-  void add(std::int32_t amount)
+  void increase(std::int32_t amount)
   {
-    assert(amount > 0);
-    m_currentAmount += amount;
+    if (amount <= 0) return;
+
+    m_current += amount;
     clamp();
-    assert(isValid());
   }
 
-  void remove(std::int32_t amount)
+  void decrease(std::int32_t amount)
   {
-    assert(amount > 0);
-    m_currentAmount -= amount;
+    if (amount <= 0) return;
+
+    m_current -= amount;
     clamp();
-    assert(isValid());
   }
 
 private:
-  std::int32_t m_currentAmount {};
-  std::int32_t m_maxAmount {};
-
-  bool isValid() const
-  {
-    return m_currentAmount >= kMinAmount
-        && m_currentAmount <= kMaxAmount
-        && m_maxAmount     >= kMinAmount
-        && m_maxAmount     <= kMaxAmount;
-  }
+  std::int32_t m_current {};
+  std::int32_t m_max {};
 };
 
 } // namespace Rpg

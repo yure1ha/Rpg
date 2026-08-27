@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cassert>
+#include <algorithm>
 #include <cstdint>
 
 namespace Rpg
@@ -12,7 +12,7 @@ public:
   StrengthComponent(std::int32_t effective = kMinStrength, std::int32_t base = kMinStrength)
       : m_effective {effective}, m_base {base}
   {
-    assert(isValid());
+    clamp();
   }
 
   static constexpr std::int32_t kMinStrength {1};
@@ -21,35 +21,36 @@ public:
   std::int32_t effective() const { return m_effective; }
   std::int32_t base() const { return m_base; }
 
+  void clamp()
+  {
+    m_effective = std::clamp(m_effective, kMinStrength, kMaxStrength);
+    m_base = std::clamp(m_base, kMinStrength, kMaxStrength);
+  }
+
   void increase(std::int32_t amount)
   {
+    if (amount <= 0) return;
+
     m_effective += amount;
-    assert(isValid());
+    clamp();
   }
 
   void decrease(std::int32_t amount)
   {
+    if (amount <= 0) return;
+
     m_effective -= amount;
-    assert(isValid());
+    clamp();
   }
 
   void reset()
   {
     m_effective = m_base;
-    assert(isValid());
   }
 
 private:
   std::int32_t m_effective {};
   std::int32_t m_base {};
-
-  bool isValid() const
-  {
-    return m_effective >= kMinStrength
-        && m_effective <= kMaxStrength
-        && m_base      >= kMinStrength
-        && m_base      <= kMaxStrength;
-  }
 };
 
 } // namespace Rpg
