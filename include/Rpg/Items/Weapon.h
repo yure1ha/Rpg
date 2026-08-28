@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Rpg/Components/IdComponent.h"
+#include "Rpg/Data/WeaponBlueprint.h"
+
 #include "Rpg/Components/Attributes/StrengthComponent.h"
 #include "Rpg/Components/StatusModifierComponent.h"
 
@@ -12,7 +14,10 @@ namespace Rpg
 class Weapon
 {
 public:
-  explicit Weapon(IdComponent id) : m_id {id}
+  explicit Weapon(IdComponent id, const WeaponBlueprint& bp)
+      : m_id       {id},
+        m_strength {bp.baseStrength, bp.effectiveStrength},
+        m_modifier {bp.modifier}
   {
   }
 

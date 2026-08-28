@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Rpg/Components/Attributes/StackComponent.h"
 #include "Rpg/Components/IdComponent.h"
+#include "Rpg/Data/ConsumableBlueprint.h"
+
+#include "Rpg/Components/Attributes/StackComponent.h"
 #include "Rpg/Components/StatusModifierComponent.h"
 
 #include <optional>
@@ -12,7 +14,10 @@ namespace Rpg
 class Consumable
 {
 public:
-  explicit Consumable(IdComponent id) : m_id {id}
+  explicit Consumable(IdComponent id, const ConsumableBlueprint& bp)
+      : m_id       {id},
+        m_stack    {bp.maxAmount, bp.currentAmount},
+        m_modifier {bp.modifier}
   {
   }
 

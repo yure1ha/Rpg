@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Rpg/Components/IdComponent.h"
+#include "Rpg/Data/ArmorBlueprint.h"
+
 #include "Rpg/Components/Attributes/DefenseComponent.h"
 #include "Rpg/Components/StatusModifierComponent.h"
 
@@ -12,7 +14,10 @@ namespace Rpg
 class Armor
 {
 public:
-  explicit Armor(IdComponent id) : m_id {id}
+  explicit Armor(IdComponent id, const ArmorBlueprint& bp)
+      : m_id       {id},
+        m_defense  {bp.baseDefense, bp.effectiveDefense},
+        m_modifier {bp.modifier}
   {
   }
 

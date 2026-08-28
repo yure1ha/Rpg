@@ -1,5 +1,8 @@
 #include "Rpg/Entities/Character.h"
 
+#include "Rpg/Components/IdComponent.h"
+#include "Rpg/Data/CharacterBlueprint.h"
+
 #include "Rpg/Items/Weapon.h"
 #include "Rpg/Items/Armor.h"
 
@@ -7,6 +10,19 @@
 
 namespace Rpg
 {
+
+Character::Character(IdComponent id, const CharacterBlueprint& bp)
+      : m_id          {id},
+        m_health      {bp.baseHealth, bp.effectiveHealth, bp.currentHealth},
+        m_strength    {bp.baseStrength, bp.effectiveStrength},
+        m_defense     {bp.baseDefense, bp.effectiveDefense},
+        m_modifiers   {bp.modifiers},
+        m_consumables {bp.consumables},
+        m_weapons     {bp.weapons},
+        m_armor       {bp.armor},
+        m_equipment   {bp.equippedWeapon, bp.equippedArmor}
+{
+}
 
 void Character::equipWeapon(Weapon weapon)
 {

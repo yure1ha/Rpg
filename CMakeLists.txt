@@ -20,6 +20,11 @@ add_library(Rpg
         include/Rpg/Items/Armor.h
         include/Rpg/Entities/Character.h
         include/Rpg/Entities/Enemy.h
+        include/Rpg/Data/EnemyBlueprint.h
+        include/Rpg/Data/CharacterBlueprint.h
+        include/Rpg/Data/ConsumableBlueprint.h
+        include/Rpg/Data/WeaponBlueprint.h
+        include/Rpg/Data/ArmorBlueprint.h
 )
 
 target_include_directories(Rpg PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

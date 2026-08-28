@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Rpg/Components/IdComponent.h"
+
 #include "Attributes/StackComponent.h"
 
 #include <algorithm>
@@ -13,11 +14,13 @@ class StatusModifierComponent
 {
 public:
   StatusModifierComponent(IdComponent id,
+                          StackComponent stack,
                           std::int32_t flatModifier = kMinFlatModifier,
                           float multiplier = kMinMultiplier)
-      : m_id {id},
+      : m_id           {id},
+        m_stack        {stack},
         m_flatModifier {flatModifier},
-        m_multiplier {multiplier}
+        m_multiplier   {multiplier}
   {
     clamp();
   }
@@ -57,6 +60,7 @@ public:
 
 private:
   IdComponent m_id;
+
   StackComponent m_stack;
 
   std::int32_t m_flatModifier {};

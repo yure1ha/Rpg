@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <functional>
+#include <utility>
 #include <vector>
 
 namespace Rpg
@@ -11,6 +12,11 @@ template <typename T>
 class ContainerComponent
 {
 public:
+  explicit ContainerComponent(std::vector<T> items = {})
+      : m_items {std::move(items)}
+  {
+  }
+
   const std::vector<T>& items() const { return m_items; }
 
   bool contains(const T& item)
