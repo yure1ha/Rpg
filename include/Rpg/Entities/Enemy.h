@@ -1,18 +1,16 @@
 #pragma once
 
+#include "Rpg/Data/Entities/EnemyBlueprint.h"
 #include "Rpg/Components/IdComponent.h"
-#include "Rpg/Data/EnemyBlueprint.h"
 
+#include "Rpg/Components/Attributes/DefenseComponent.h"
 #include "Rpg/Components/Attributes/HealthComponent.h"
 #include "Rpg/Components/Attributes/StrengthComponent.h"
-#include "Rpg/Components/Attributes/DefenseComponent.h"
 
 #include "Rpg/Components/StatusModifierComponent.h"
 
 #include "Rpg/Components/Containers/ContainerComponent.h"
 #include "Rpg/Components/Containers/EquipmentComponent.h"
-
-#include <cstdint>
 
 namespace Rpg
 {
@@ -22,9 +20,9 @@ class Enemy
 public:
   Enemy(IdComponent id, const EnemyBlueprint& bp)
       : m_id        {id},
-        m_health    {bp.baseHealth, bp.effectiveHealth, bp.currentHealth},
-        m_strength  {bp.baseStrength, bp.effectiveStrength},
-        m_defense   {bp.baseDefense, bp.effectiveDefense},
+        m_health    {bp.currentHealth, bp.effectiveHealth, bp.baseHealth},
+        m_strength  {bp.effectiveStrength, bp.baseStrength},
+        m_defense   {bp.effectiveDefense, bp.baseDefense},
         m_modifiers {bp.modifiers},
         m_equipment {bp.equippedWeapon, bp.equippedArmor}
   {

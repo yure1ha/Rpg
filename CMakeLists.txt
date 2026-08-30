@@ -6,25 +6,36 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_library(Rpg
+        # Components
         include/Rpg/Components/IdComponent.h
+        include/Rpg/Components/StatusModifierComponent.h
         include/Rpg/Components/Attributes/HealthComponent.h
         include/Rpg/Components/Attributes/DefenseComponent.h
         include/Rpg/Components/Attributes/StrengthComponent.h
-        include/Rpg/Components/Attributes/StackComponent.h
-        include/Rpg/Components/StatusModifierComponent.h
+        include/Rpg/Components/StackComponent.h
         include/Rpg/Components/Containers/ContainerComponent.h
         include/Rpg/Components/Containers/EquipmentComponent.h
+
+        # Data
+        include/Rpg/Data/Entities/CharacterBlueprint.h
+        include/Rpg/Data/Entities/EnemyBlueprint.h
+        include/Rpg/Data/Items/ConsumableBlueprint.h
+        include/Rpg/Data/Items/WeaponBlueprint.h
+        include/Rpg/Data/Items/ArmorBlueprint.h
+
+        # Entities
+        include/Rpg/Entities/Character.h
+        include/Rpg/Entities/Enemy.h
         src/Entities/Character.cpp
+
+        # Items
         include/Rpg/Items/Consumable.h
         include/Rpg/Items/Weapon.h
         include/Rpg/Items/Armor.h
-        include/Rpg/Entities/Character.h
-        include/Rpg/Entities/Enemy.h
-        include/Rpg/Data/EnemyBlueprint.h
-        include/Rpg/Data/CharacterBlueprint.h
-        include/Rpg/Data/ConsumableBlueprint.h
-        include/Rpg/Data/WeaponBlueprint.h
-        include/Rpg/Data/ArmorBlueprint.h
+
+        # Concepts
+        include/Rpg/Concepts/AttributeComponent.h
+        include/Rpg/Concepts/ContainerItem.h
 )
 
 target_include_directories(Rpg PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

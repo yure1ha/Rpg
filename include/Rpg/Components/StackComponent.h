@@ -9,8 +9,8 @@ namespace Rpg
 class StackComponent
 {
 public:
-  StackComponent(std::int32_t max, std::int32_t current)
-      : m_max {max}, m_current {current}
+  StackComponent(std::int32_t current, std::int32_t max)
+      : m_current {current}, m_max {max}
   {
     clamp();
   }
@@ -23,8 +23,8 @@ public:
 
   void clamp()
   {
-    m_max = std::clamp(m_max, kMinAmount, kMaxAmount);
     m_current = std::clamp(m_current, kMinAmount, kMaxAmount);
+    m_max = std::clamp(m_max, kMinAmount, kMaxAmount);
   }
 
   void increase(std::int32_t amount)
@@ -44,8 +44,8 @@ public:
   }
 
 private:
-  std::int32_t m_max {};
   std::int32_t m_current {};
+  std::int32_t m_max {};
 };
 
 } // namespace Rpg

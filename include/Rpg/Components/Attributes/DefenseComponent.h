@@ -9,8 +9,8 @@ namespace Rpg
 class DefenseComponent
 {
 public:
-  DefenseComponent(std::int32_t base, std::int32_t effective)
-      : m_base {base}, m_effective {effective}
+  DefenseComponent(std::int32_t effective, std::int32_t base)
+      : m_effective {effective}, m_base {base}
   {
     clamp();
   };
@@ -18,13 +18,13 @@ public:
   static constexpr std::int32_t kMinDefense {1};
   static constexpr std::int32_t kMaxDefense {99};
 
-  std::int32_t base() const { return m_base; }
   std::int32_t effective() const { return m_effective; }
+  std::int32_t base() const      { return m_base; }
 
   void clamp()
   {
-    m_base = std::clamp(m_base, kMinDefense, kMaxDefense);
     m_effective = std::clamp(m_effective, kMinDefense, kMaxDefense);
+    m_base      = std::clamp(m_base, kMinDefense, kMaxDefense);
   }
 
   void increase(std::int32_t amount)
@@ -49,8 +49,8 @@ public:
   }
 
 private:
-  std::int32_t m_base {};
   std::int32_t m_effective {};
+  std::int32_t m_base {};
 };
 
 } // namespace Rpg

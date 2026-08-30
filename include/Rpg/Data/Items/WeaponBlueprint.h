@@ -10,10 +10,10 @@ namespace Rpg
 
 struct WeaponBlueprint
 {
+  std::optional<StatusModifierComponent> modifier;
+
   std::int32_t baseStrength {};
   std::int32_t effectiveStrength {};
-
-  std::optional<StatusModifierComponent> modifier;
 };
 
 } // namespace Rpg

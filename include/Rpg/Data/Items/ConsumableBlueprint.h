@@ -8,12 +8,12 @@
 namespace Rpg
 {
 
-struct ArmorBlueprint
+struct ConsumableBlueprint
 {
-  std::int32_t baseDefense {};
-  std::int32_t effectiveDefense {};
-
   std::optional<StatusModifierComponent> modifier;
+
+  std::int32_t maxAmount {};
+  std::int32_t currentAmount {};
 };
 
 } // namespace Rpg

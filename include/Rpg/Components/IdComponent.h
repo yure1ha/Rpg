@@ -7,9 +7,12 @@ namespace Rpg
 
 struct IdComponent
 {
-  std::int32_t id {};
+  std::int32_t instanceId {};
 
-  bool operator==(const IdComponent& comp) const { return id == comp.id; }
+  bool operator==(const IdComponent& comp) const
+  {
+    return instanceId == comp.instanceId;
+  }
 };
 
 } // namespace Rpg

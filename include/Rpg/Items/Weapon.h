@@ -1,11 +1,12 @@
 #pragma once
 
+#include "Rpg/Data/Items/WeaponBlueprint.h"
 #include "Rpg/Components/IdComponent.h"
-#include "Rpg/Data/WeaponBlueprint.h"
 
 #include "Rpg/Components/Attributes/StrengthComponent.h"
 #include "Rpg/Components/StatusModifierComponent.h"
 
+#include <cstdint>
 #include <optional>
 
 namespace Rpg
@@ -22,7 +23,7 @@ public:
   }
 
   IdComponent id() const { return m_id; }
-  StrengthComponent sortKey() const { return m_strength; }
+  std::int32_t sortKey() const { return m_strength.effective(); }
 
   StrengthComponent strength() const { return m_strength; }
   std::optional<StatusModifierComponent> modifier() const { return m_modifier; }

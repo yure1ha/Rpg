@@ -2,6 +2,7 @@
 
 #include "Rpg/Components/StatusModifierComponent.h"
 
+#include "Rpg/Items/Consumable.h"
 #include "Rpg/Items/Weapon.h"
 #include "Rpg/Items/Armor.h"
 
@@ -12,8 +13,17 @@
 namespace Rpg
 {
 
-struct EnemyBlueprint
+struct CharacterBlueprint
 {
+  std::vector<StatusModifierComponent> modifiers {};
+
+  std::vector<Consumable> consumables {};
+  std::vector<Weapon> weapons {};
+  std::vector<Armor> armor {};
+
+  std::optional<Weapon> equippedWeapon;
+  std::optional<Armor> equippedArmor;
+
   std::int32_t baseHealth {};
   std::int32_t effectiveHealth {};
   std::int32_t currentHealth {};
@@ -23,11 +33,6 @@ struct EnemyBlueprint
 
   std::int32_t baseDefense {};
   std::int32_t effectiveDefense {};
-
-  std::vector<StatusModifierComponent> modifiers {};
-
-  std::optional<Weapon> equippedWeapon;
-  std::optional<Armor> equippedArmor;
 };
 
 } // namespace Rpg

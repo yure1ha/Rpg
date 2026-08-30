@@ -1,11 +1,12 @@
 #pragma once
 
+#include "Rpg/Data/Items/ConsumableBlueprint.h"
 #include "Rpg/Components/IdComponent.h"
-#include "Rpg/Data/ConsumableBlueprint.h"
 
-#include "Rpg/Components/Attributes/StackComponent.h"
+#include "Rpg/Components/StackComponent.h"
 #include "Rpg/Components/StatusModifierComponent.h"
 
+#include <cstdint>
 #include <optional>
 
 namespace Rpg
@@ -22,7 +23,7 @@ public:
   }
 
   IdComponent id() const { return m_id; }
-  StackComponent sortKey() const { return m_stack; }
+  std::int32_t sortKey() const { return m_stack.current(); }
 
   StackComponent stack() const { return m_stack; }
   std::optional<StatusModifierComponent> modifier() const { return m_modifier; }

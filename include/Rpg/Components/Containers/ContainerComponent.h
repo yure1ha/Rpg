@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Rpg/Concepts/ContainerItem.h"
+
 #include <algorithm>
 #include <functional>
 #include <utility>
@@ -8,7 +10,7 @@
 namespace Rpg
 {
 
-template <typename T>
+template <Concepts::ContainerItem T>
 class ContainerComponent
 {
 public:
@@ -19,7 +21,7 @@ public:
 
   const std::vector<T>& items() const { return m_items; }
 
-  bool contains(const T& item)
+  bool contains(const T& item) const
   {
     return std::ranges::any_of(m_items, [&item](const T& comp)
     {
