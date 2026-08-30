@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Rpg/Concepts/ContainerItem.h"
+#include "Rpg/Concepts/InventoryItem.h"
 
 #include <algorithm>
 #include <utility>
@@ -9,7 +9,7 @@
 namespace Rpg
 {
 
-template <Concepts::ContainerItem T>
+template <Concepts::InventoryItem T>
 class ContainerComponent
 {
 public:
@@ -18,7 +18,13 @@ public:
   {
   }
 
-  const std::vector<T>& items() const { return m_items; }
+  const std::vector<T>& items() const     { return m_items; }
+
+  auto begin() { return m_items.begin(); }
+  auto end()   { return m_items.end(); }
+
+  auto begin() const { return m_items.begin(); }
+  auto end() const   { return m_items.end(); }
 
   bool contains(const T& item) const
   {
@@ -28,9 +34,9 @@ public:
     });
   }
 
-  void add(const T& item)
+  void add(T item)
   {
-    m_items.push_back(item);
+    m_items.push_back(std::move(item));
   }
 
   void remove(const T& item)

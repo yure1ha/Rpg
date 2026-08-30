@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Rpg/Data/StatusModifierType.h"
+
 #include <algorithm>
 #include <cstdint>
 
@@ -19,6 +21,7 @@ public:
 
   static constexpr std::int32_t kMinHealth {0};
   static constexpr std::int32_t kMaxHealth {9999};
+  static constexpr auto         kModifierType {StatusModifierType::Health};
 
   std::int32_t base() const      { return m_base; }
   std::int32_t effective() const { return m_effective; }

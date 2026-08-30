@@ -22,7 +22,7 @@ namespace Rpg
 class Character
 {
 public:
-  using ModifiersList       = ContainerComponent<StatusModifierComponent>;
+  using StatusModifiers     = ContainerComponent<StatusModifierComponent>;
   using ConsumableInventory = ContainerComponent<Consumable>;
   using WeaponInventory     = ContainerComponent<Weapon>;
   using ArmorInventory      = ContainerComponent<Armor>;
@@ -39,6 +39,9 @@ public:
   const StrengthComponent& strength() const { return m_strength; }
   const DefenseComponent& defense() const   { return m_defense; }
 
+  StatusModifiers& modifiers()             { return m_modifiers; }
+  const StatusModifiers& modifiers() const { return m_modifiers; }
+
   void equipWeapon(Weapon weapon);
   void unequipWeapon();
   void equipArmor(Armor armor);
@@ -53,7 +56,7 @@ private:
   StrengthComponent   m_strength;
   DefenseComponent    m_defense;
 
-  ModifiersList       m_modifiers;
+  StatusModifiers     m_modifiers;
 
   ConsumableInventory m_consumables;
   WeaponInventory     m_weapons;

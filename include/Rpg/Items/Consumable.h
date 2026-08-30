@@ -22,15 +22,16 @@ public:
   {
   }
 
-  IdComponent id() const          { return m_id; }
-  std::int32_t sortKey() const    { return m_stack.current(); }
-  StackComponent stack() const    { return m_stack; }
-  StatusModifier modifier() const { return m_modifier; }
+  IdComponent id() const       { return m_id; }
+  std::int32_t sortKey() const { return m_stack.current(); }
+
+  StackComponent stack() const       { return m_stack; }
+  OptStatusModifier modifier() const { return m_modifier; }
 
 private:
-  IdComponent    m_id;
-  StackComponent m_stack;
-  StatusModifier m_modifier;
+  IdComponent       m_id;
+  StackComponent    m_stack;
+  OptStatusModifier m_modifier;
 };
 
 } // namespace Rpg

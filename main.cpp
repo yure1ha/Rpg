@@ -4,6 +4,7 @@
 
 #include "Rpg/Data/Entities/CharacterBlueprint.h"
 #include "Rpg/Data/Entities/EnemyBlueprint.h"
+#include "Rpg/Data/StatusModifierType.h"
 
 #include "Rpg/Entities/Character.h"
 #include "Rpg/Entities/Enemy.h"
@@ -12,6 +13,9 @@
 #include "Rpg/Systems/CombatSystem.h"
 
 #include <iostream>
+
+namespace
+{
 
 void printEntity(const Rpg::Character& yureiha)
 {
@@ -31,6 +35,8 @@ void printEntity(const Rpg::Enemy& ahieruy)
           << "[Base HP] " << ahieruy.health().base() << " "
           << "[STR] "     << ahieruy.strength().effective() << "/" << ahieruy.strength().base() << " "
           << "[DEF] "     << ahieruy.defense().effective() << "/" << ahieruy.defense().base() << '\n';
+}
+
 }
 
 int main()
@@ -64,8 +70,18 @@ int main()
   Character yureiha {IdComponent {1}, protagonist};
   Enemy ahieruy     {IdComponent {2}, antagonist};
 
-  StatusModifierComponent strengthUp  {IdComponent {10}, StackComponent {1, 99}, 10};
-  StatusModifierComponent defenseDown {IdComponent {11}, StackComponent {2, 99}, -5};
+  StatusModifierComponent strengthUp  {
+    IdComponent {10},
+    StatusModifierType::Strength,
+    StackComponent {1, 99},
+    10
+  };
+  StatusModifierComponent defenseDown {
+    IdComponent {11},
+    StatusModifierType::Defense,
+    StackComponent {2, 99},
+    -5
+  };
 
   printEntity(yureiha);
   printEntity(ahieruy);
@@ -81,8 +97,11 @@ int main()
   CombatSystem::applyDamage(ahieruy, yureiha);
   printEntity(yureiha);
 
-  StatusModifierSystem::applyModifier(yureiha.strength(), strengthUp);
-  StatusModifierSystem::applyModifier(ahieruy.defense(), defenseDown);
+  yureiha.modifiers().add(strengthUp);
+  ahieruy.modifiers().add(defenseDown);
+
+  StatusModifierSystem::updateModifiers(yureiha.modifiers(), yureiha.strength());
+  StatusModifierSystem::updateModifiers(ahieruy.modifiers(), ahieruy.defense());
 
   printEntity(yureiha);
   printEntity(ahieruy);

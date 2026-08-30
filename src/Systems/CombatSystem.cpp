@@ -18,14 +18,14 @@ std::int32_t calculateDamage(const StrengthComponent& str, const DefenseComponen
 
 void applyDamage(const Character& attacker, Enemy& defender)
 {
-  const auto damage {calculateDamage(attacker.strength(), defender.defense())};
-  defender.health().takeDamage(damage);
+  const auto amount {calculateDamage(attacker.strength(), defender.defense())};
+  defender.health().takeDamage(amount);
 }
 
 void applyDamage(const Enemy& attacker, Character& defender)
 {
-  const auto damage {calculateDamage(attacker.strength(), defender.defense())};
-  defender.health().takeDamage(damage);
+  const auto amount {calculateDamage(attacker.strength(), defender.defense())};
+  defender.health().takeDamage(amount);
 }
 
 } // namespace Rpg::CombatSystem

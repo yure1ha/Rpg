@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Rpg/Data/StatusModifierType.h"
+
 #include <algorithm>
 #include <cstdint>
 
@@ -17,6 +19,7 @@ public:
 
   static constexpr std::int32_t kMinDefense {1};
   static constexpr std::int32_t kMaxDefense {99};
+  static constexpr auto         kModifierType {StatusModifierType::Defense};
 
   std::int32_t base() const      { return m_base; }
   std::int32_t effective() const { return m_effective; }

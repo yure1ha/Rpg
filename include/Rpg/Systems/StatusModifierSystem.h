@@ -2,21 +2,37 @@
 
 #include "Rpg/Concepts/AttributeComponent.h"
 #include "Rpg/Components/StatusModifierComponent.h"
+#include "Rpg/Components/Containers/ContainerComponent.h"
 
 namespace Rpg::StatusModifierSystem
 {
 
+using StatusModifiers = ContainerComponent<StatusModifierComponent>;
+
 template <Concepts::AttributeComponent T>
-void applyModifier(T& attr, const StatusModifierComponent& modifier)
+void applyModifier(const StatusModifierComponent& modifier, T& attr)
 {
-  if (modifier.total() > 0)
+  if (!modifier.isActive() || modifier.type() != T::kModifierType) return;
+
+  if (const auto total {modifier.total()}; total > 0)
   {
-    attr.increase(modifier.total());
+    attr.increase(total);
   }
 
-  else if (modifier.total() < 0)
+  else if (total < 0)
   {
-    attr.decrease(-modifier.total());
+    attr.decrease(-total);
+  }
+}
+
+template <Concepts::AttributeComponent T>
+void updateModifiers(const StatusModifiers& modifiers, T& attr)
+{
+  attr.reset();
+
+  for (const auto& modifier: modifiers)
+  {
+    applyModifier(modifier, attr);
   }
 }
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Rpg/Data/StatusModifierType.h"
+
 #include <concepts>
 #include <cstdint>
 
@@ -9,8 +11,10 @@ namespace Rpg::Concepts
 template <typename T>
 concept AttributeComponent = requires(T& attr, std::int32_t amount)
 {
-  { attr.base() }      -> std::convertible_to<std::int32_t>;
-  { attr.effective() } -> std::convertible_to<std::int32_t>;
+  { T::kModifierType } -> std::same_as<const StatusModifierType&>;
+
+  { attr.base() }      -> std::same_as<std::int32_t>;
+  { attr.effective() } -> std::same_as<std::int32_t>;
   { attr.increase(amount) };
   { attr.decrease(amount) };
   { attr.reset() };

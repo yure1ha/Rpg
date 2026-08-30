@@ -18,7 +18,7 @@ add_library(Rpg
 
         # Concepts
         include/Rpg/Concepts/AttributeComponent.h
-        include/Rpg/Concepts/ContainerItem.h
+        include/Rpg/Concepts/InventoryItem.h
 
         # Data
         include/Rpg/Data/Entities/CharacterBlueprint.h
@@ -26,6 +26,7 @@ add_library(Rpg
         include/Rpg/Data/Items/ConsumableBlueprint.h
         include/Rpg/Data/Items/WeaponBlueprint.h
         include/Rpg/Data/Items/ArmorBlueprint.h
+        include/Rpg/Data/StatusModifierType.h
 
         # Entities
         include/Rpg/Entities/Character.h

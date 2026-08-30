@@ -40,6 +40,9 @@ public:
   const StrengthComponent& strength() const   { return m_strength; }
   const DefenseComponent& defense() const     { return m_defense; }
 
+  ModifiersList& modifiers()             { return m_modifiers; }
+  const ModifiersList& modifiers() const { return m_modifiers; }
+
 private:
   IdComponent        m_id;
 
