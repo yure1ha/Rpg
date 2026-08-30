@@ -7,13 +7,13 @@ namespace Rpg::Concepts
 {
 
 template <typename T>
-concept AttributeComponent = requires(T& attribute, std::int32_t amount)
+concept AttributeComponent = requires(T& attr, std::int32_t amount)
 {
-  { attribute.base() }      -> std::convertible_to<std::int32_t>;
-  { attribute.effective() } -> std::convertible_to<std::int32_t>;
-  { attribute.increase(amount) };
-  { attribute.decrease(amount) };
-  { attribute.reset() };
+  { attr.base() }      -> std::convertible_to<std::int32_t>;
+  { attr.effective() } -> std::convertible_to<std::int32_t>;
+  { attr.increase(amount) };
+  { attr.decrease(amount) };
+  { attr.reset() };
 };
 
 } // namespace Rpg::Concepts

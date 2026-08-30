@@ -9,8 +9,8 @@ namespace Rpg
 class StrengthComponent
 {
 public:
-  StrengthComponent(std::int32_t effective, std::int32_t base)
-      : m_effective {effective}, m_base {base}
+  StrengthComponent(std::int32_t base, std::int32_t effective)
+      : m_base {base}, m_effective {effective}
   {
     clamp();
   }
@@ -18,14 +18,8 @@ public:
   static constexpr std::int32_t kMinStrength {1};
   static constexpr std::int32_t kMaxStrength {99};
 
-  std::int32_t effective() const { return m_effective; }
   std::int32_t base() const      { return m_base; }
-
-  void clamp()
-  {
-    m_effective = std::clamp(m_effective, kMinStrength, kMaxStrength);
-    m_base      = std::clamp(m_base, kMinStrength, kMaxStrength);
-  }
+  std::int32_t effective() const { return m_effective; }
 
   void increase(std::int32_t amount)
   {
@@ -46,11 +40,18 @@ public:
   void reset()
   {
     m_effective = m_base;
+    clamp();
   }
 
 private:
-  std::int32_t m_effective {};
+  void clamp()
+  {
+    m_base      = std::clamp(m_base, kMinStrength, kMaxStrength);
+    m_effective = std::clamp(m_effective, kMinStrength, kMaxStrength);
+  }
+
   std::int32_t m_base {};
+  std::int32_t m_effective {};
 };
 
 } // namespace Rpg

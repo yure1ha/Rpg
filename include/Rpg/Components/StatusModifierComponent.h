@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Rpg/Components/IdComponent.h"
-
-#include "StackComponent.h"
+#include "Rpg/Components/StackComponent.h"
 
 #include <algorithm>
 #include <cstdint>
+#include <optional>
 
 namespace Rpg
 {
@@ -56,9 +56,11 @@ public:
   }
 
 private:
-  IdComponent m_id;
+  IdComponent    m_id;
   StackComponent m_stack;
-  std::int32_t m_value {};
+  std::int32_t   m_value {};
 };
+
+using StatusModifier = std::optional<StatusModifierComponent>;
 
 } // namespace Rpg

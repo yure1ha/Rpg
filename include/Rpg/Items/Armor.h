@@ -15,6 +15,8 @@ namespace Rpg
 class Armor
 {
 public:
+  using StatusModifier = std::optional<StatusModifierComponent>;
+
   explicit Armor(IdComponent id, const ArmorBlueprint& bp)
       : m_id       {id},
         m_defense  {bp.baseDefense, bp.effectiveDefense},
@@ -22,17 +24,16 @@ public:
   {
   }
 
-  IdComponent id() const { return m_id; }
-  std::int32_t sortKey() const { return m_defense.effective(); }
+  IdComponent id() const           { return m_id; }
+  std::int32_t sortKey() const     { return m_defense.effective(); }
 
   DefenseComponent defense() const { return m_defense; }
-  std::optional<StatusModifierComponent> modifier() const { return m_modifier; }
+  StatusModifier modifier() const  { return m_modifier; }
 
 private:
-  IdComponent m_id;
-
+  IdComponent      m_id;
   DefenseComponent m_defense;
-  std::optional<StatusModifierComponent> m_modifier;
+  StatusModifier   m_modifier;
 };
 
 } // namespace Rpg

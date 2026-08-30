@@ -16,6 +16,10 @@ add_library(Rpg
         include/Rpg/Components/Containers/ContainerComponent.h
         include/Rpg/Components/Containers/EquipmentComponent.h
 
+        # Concepts
+        include/Rpg/Concepts/AttributeComponent.h
+        include/Rpg/Concepts/ContainerItem.h
+
         # Data
         include/Rpg/Data/Entities/CharacterBlueprint.h
         include/Rpg/Data/Entities/EnemyBlueprint.h
@@ -33,9 +37,10 @@ add_library(Rpg
         include/Rpg/Items/Weapon.h
         include/Rpg/Items/Armor.h
 
-        # Concepts
-        include/Rpg/Concepts/AttributeComponent.h
-        include/Rpg/Concepts/ContainerItem.h
+        # Systems
+        include/Rpg/Systems/StatusModifierSystem.h
+        include/Rpg/Systems/CombatSystem.h
+        src/Systems/CombatSystem.cpp
 )
 
 target_include_directories(Rpg PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

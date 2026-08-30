@@ -15,6 +15,8 @@ namespace Rpg
 class Weapon
 {
 public:
+  using StatusModifier = std::optional<StatusModifierComponent>;
+
   explicit Weapon(IdComponent id, const WeaponBlueprint& bp)
       : m_id       {id},
         m_strength {bp.baseStrength, bp.effectiveStrength},
@@ -22,17 +24,15 @@ public:
   {
   }
 
-  IdComponent id() const { return m_id; }
-  std::int32_t sortKey() const { return m_strength.effective(); }
-
+  IdComponent id() const             { return m_id; }
+  std::int32_t sortKey() const       { return m_strength.effective(); }
   StrengthComponent strength() const { return m_strength; }
-  std::optional<StatusModifierComponent> modifier() const { return m_modifier; }
+  StatusModifier modifier() const    { return m_modifier; }
 
 private:
-  IdComponent m_id;
-
+  IdComponent       m_id;
   StrengthComponent m_strength;
-  std::optional<StatusModifierComponent> m_modifier;
+  StatusModifier    m_modifier;
 };
 
 } // namespace Rpg

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Rpg/Data/Entities/CharacterBlueprint.h"
 #include "Rpg/Components/IdComponent.h"
+#include "Rpg/Data/Entities/CharacterBlueprint.h"
 
 #include "Rpg/Components/Attributes/DefenseComponent.h"
 #include "Rpg/Components/Attributes/HealthComponent.h"
@@ -29,11 +29,15 @@ public:
 
   Character(IdComponent id, const CharacterBlueprint& bp);
 
-  IdComponent id() const { return m_id; }
+  IdComponent id() const        { return m_id; }
 
-  HealthComponent& health() { return m_health; }
+  HealthComponent& health()     { return m_health; }
   StrengthComponent& strength() { return m_strength; }
-  DefenseComponent& defense() { return m_defense; }
+  DefenseComponent& defense()   { return m_defense; }
+
+  const HealthComponent& health() const     { return m_health; }
+  const StrengthComponent& strength() const { return m_strength; }
+  const DefenseComponent& defense() const   { return m_defense; }
 
   void equipWeapon(Weapon weapon);
   void unequipWeapon();
@@ -43,19 +47,19 @@ public:
   void useConsumable(Consumable consumable);
 
 private:
-  IdComponent m_id;
+  IdComponent         m_id;
 
-  HealthComponent m_health;
-  StrengthComponent m_strength;
-  DefenseComponent m_defense;
+  HealthComponent     m_health;
+  StrengthComponent   m_strength;
+  DefenseComponent    m_defense;
 
-  ModifiersList m_modifiers;
+  ModifiersList       m_modifiers;
 
   ConsumableInventory m_consumables;
-  WeaponInventory m_weapons;
-  ArmorInventory m_armor;
+  WeaponInventory     m_weapons;
+  ArmorInventory      m_armor;
 
-  EquipmentComponent m_equipment;
+  EquipmentComponent  m_equipment;
 };
 
 } // namespace Rpg
