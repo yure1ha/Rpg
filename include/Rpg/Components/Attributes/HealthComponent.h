@@ -26,7 +26,7 @@ public:
   std::int32_t base() const      { return m_base; }
   std::int32_t effective() const { return m_effective; }
   std::int32_t current() const   { return m_current; }
-  bool isAlive() const           { return m_current > kMinHealth; }
+  bool alive() const             { return m_current > kMinHealth; }
 
   void increase(std::int32_t amount)
   {

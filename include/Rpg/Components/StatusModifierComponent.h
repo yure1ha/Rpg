@@ -38,28 +38,12 @@ public:
 
   bool isActive() const { return m_stack.current() > 0; }
 
+private:
   void clamp()
   {
     m_value = std::clamp(m_value, kMinModifier, kMaxModifier);
   }
 
-  void increaseStack(std::int32_t count)
-  {
-    if (count <= 0) return;
-
-    m_stack.increase(count);
-    clamp();
-  }
-
-  void decreaseStack(std::int32_t count)
-  {
-    if (count <= 0) return;
-
-    m_stack.decrease(count);
-    clamp();
-  }
-
-private:
   IdComponent        m_id;
   StatusModifierType m_type {};
   StackComponent     m_stack;

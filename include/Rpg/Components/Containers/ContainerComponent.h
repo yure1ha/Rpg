@@ -1,8 +1,10 @@
 #pragma once
 
 #include "Rpg/Concepts/InventoryItem.h"
+#include "Rpg/Components/IdComponent.h"
 
 #include <algorithm>
+#include <cstdint>
 #include <utility>
 #include <vector>
 
@@ -26,30 +28,68 @@ public:
   auto begin() const { return m_items.begin(); }
   auto end() const   { return m_items.end(); }
 
-  bool contains(const T& item) const
+  bool contains(IdComponent id) const
   {
-    return std::ranges::any_of(m_items, [&item](const T& comp)
+    return std::ranges::any_of(m_items, [id](const T& comp)
     {
-      return item.id() == comp.id();
+      return id.typeId == comp.id().typeId;
     });
   }
 
-  void add(T item)
+  auto find(IdComponent id)
   {
+    return std::ranges::find_if(m_items, [id](const T& comp)
+    {
+      return id == comp.id();
+    });
+  }
+
+  auto find(IdComponent id) const
+  {
+    return std::ranges::find_if(m_items, [id](const T& comp)
+    {
+      return id == comp.id();
+    });
+  }
+
+  void add(T item, std::int32_t amount = 1)
+  {
+    if (auto it {find(item.id())}; it != end())
+    {
+      it->stack().increase(amount);
+      return;
+    }
+
     m_items.push_back(std::move(item));
   }
 
-  void remove(const T& item)
+  void remove(IdComponent id, std::int32_t amount = 1)
   {
-    std::erase_if(m_items, [&item](const T& comp)
+    if (auto it {find(id)}; it != end())
     {
-      return item.id() == comp.id();
-    });
+      it->stack().decrease(amount);
+
+      if (it->stack().empty())
+      {
+        std::erase_if(m_items, [id](const T& comp)
+        {
+          return id == comp.id();
+        });
+      }
+    }
   }
 
   void sort()
   {
-    std::ranges::stable_sort(m_items, std::greater {}, &T::sortKey);
+    std::ranges::sort(m_items, [](const T& a, const T& b)
+    {
+      if (a.sortKey() != b.sortKey())
+      {
+        return a.sortKey() > b.sortKey();
+      }
+
+      return a.id() > b.id();
+    });
   }
 
 private:

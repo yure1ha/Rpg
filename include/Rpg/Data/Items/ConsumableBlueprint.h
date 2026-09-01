@@ -11,9 +11,8 @@ namespace Rpg
 struct ConsumableBlueprint
 {
   std::optional<StatusModifierComponent> modifier;
-
-  std::int32_t maxAmount {};
-  std::int32_t currentAmount {};
+  std::int32_t maxStack {};
+  std::int32_t currentStack {};
 };
 
 } // namespace Rpg

@@ -20,7 +20,7 @@ namespace
 void printEntity(const Rpg::Character& yureiha)
 {
   std::cout << "[" << "Yureiha" << "]"
-          << "[ID] "      << yureiha.id().instanceId << " "
+          << "[ID] "      << yureiha.id().id << " "
           << "[HP] "      << yureiha.health().current() << "/" << yureiha.health().effective() << " "
           << "[Base HP] " << yureiha.health().base() << " "
           << "[STR] "     << yureiha.strength().effective() << "/" << yureiha.strength().base() << " "
@@ -30,7 +30,7 @@ void printEntity(const Rpg::Character& yureiha)
 void printEntity(const Rpg::Enemy& ahieruy)
 {
   std::cout << "[" << "Ahieruy" << "]"
-          << "[ID] "      << ahieruy.id().instanceId << " "
+          << "[ID] "      << ahieruy.id().id << " "
           << "[HP] "      << ahieruy.health().current() << "/" << ahieruy.health().effective() << " "
           << "[Base HP] " << ahieruy.health().base() << " "
           << "[STR] "     << ahieruy.strength().effective() << "/" << ahieruy.strength().base() << " "

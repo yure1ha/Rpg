@@ -1,5 +1,6 @@
 #pragma once
 
+#include <compare>
 #include <cstdint>
 
 namespace Rpg
@@ -7,12 +8,10 @@ namespace Rpg
 
 struct IdComponent
 {
+  std::int32_t typeId {};
   std::int32_t instanceId {};
 
-  bool operator==(const IdComponent& comp) const
-  {
-    return instanceId == comp.instanceId;
-  }
+  auto operator<=>(const IdComponent&) const = default;
 };
 
 } // namespace Rpg

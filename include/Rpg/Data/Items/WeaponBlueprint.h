@@ -11,7 +11,8 @@ namespace Rpg
 struct WeaponBlueprint
 {
   std::optional<StatusModifierComponent> modifier;
-
+  std::int32_t maxStack {};
+  std::int32_t currentStack {};
   std::int32_t baseStrength {};
   std::int32_t effectiveStrength {};
 };
