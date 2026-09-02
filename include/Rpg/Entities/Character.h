@@ -29,7 +29,7 @@ public:
 
   Character(IdComponent id, const CharacterBlueprint& bp);
 
-  IdComponent id() const        { return m_id; }
+  IdComponent id() const { return m_id; }
 
   HealthComponent& health()     { return m_health; }
   StrengthComponent& strength() { return m_strength; }
@@ -41,6 +41,14 @@ public:
 
   StatusModifiers& modifiers()             { return m_modifiers; }
   const StatusModifiers& modifiers() const { return m_modifiers; }
+
+  ConsumableInventory& consumables() { return m_consumables; }
+  WeaponInventory& weapons()         { return m_weapons; }
+  ArmorInventory& armor()            { return m_armor; }
+
+  const ConsumableInventory& consumables() const { return m_consumables; }
+  const WeaponInventory& weapons() const         { return m_weapons; }
+  const ArmorInventory& armor() const            { return m_armor; }
 
   void equipWeapon(Weapon weapon);
   void unequipWeapon();

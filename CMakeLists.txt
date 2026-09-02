@@ -42,10 +42,19 @@ add_library(Rpg
         include/Rpg/Systems/StatusModifierSystem.h
         include/Rpg/Systems/CombatSystem.h
         src/Systems/CombatSystem.cpp
+
+        # Factories
+        include/Rpg/Factories/IdFactory.h
 )
 
 target_include_directories(Rpg PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_executable(main main.cpp)
-
 target_link_libraries(main PRIVATE Rpg)
+
+add_executable(test tests/test.cpp
+        tests/CombatTest.cpp
+        tests/Helpers.h
+)
+target_link_libraries(test PRIVATE Rpg)
+target_include_directories(test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/tests)

@@ -30,7 +30,7 @@ public:
   {
   }
 
-  IdComponent id() const        { return m_id; }
+  IdComponent id() const { return m_id; }
 
   HealthComponent& health()     { return m_health; }
   StrengthComponent& strength() { return m_strength; }

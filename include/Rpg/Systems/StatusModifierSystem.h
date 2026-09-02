@@ -28,8 +28,6 @@ void applyModifier(const StatusModifierComponent& modifier, T& attr)
 template <Concepts::AttributeComponent T>
 void updateModifiers(const StatusModifiers& modifiers, T& attr)
 {
-  attr.reset();
-
   for (const auto& modifier: modifiers)
   {
     applyModifier(modifier, attr);

@@ -20,7 +20,7 @@ public:
   {
   }
 
-  const std::vector<T>& items() const     { return m_items; }
+  const std::vector<T>& items() const { return m_items; }
 
   auto begin() { return m_items.begin(); }
   auto end()   { return m_items.end(); }
@@ -65,17 +65,16 @@ public:
 
   void remove(IdComponent id, std::int32_t amount = 1)
   {
-    if (auto it {find(id)}; it != end())
-    {
-      it->stack().decrease(amount);
+    auto it {find(id)};
+    if (it == end()) return;
 
-      if (it->stack().empty())
+    it->stack().decrease(amount);
+    if (it->stack().empty())
+    {
+      std::erase_if(m_items, [id](const T& comp)
       {
-        std::erase_if(m_items, [id](const T& comp)
-        {
-          return id == comp.id();
-        });
-      }
+        return id == comp.id();
+      });
     }
   }
 

@@ -26,11 +26,11 @@ Character::Character(IdComponent id, const CharacterBlueprint& bp)
 
 void Character::equipWeapon(Weapon weapon)
 {
-  if (!m_weapons.contains(weapon)) return;
+  if (!m_weapons.contains(weapon.id())) return;
 
   unequipWeapon();
 
-  m_weapons.remove(weapon);
+  m_weapons.remove(weapon.id());
   m_equipment.weapon = weapon;
 
   if (weapon.modifier().has_value())
@@ -45,7 +45,7 @@ void Character::unequipWeapon()
 
   if (m_equipment.weapon->modifier().has_value())
   {
-    m_modifiers.remove(*m_equipment.weapon->modifier());
+    m_modifiers.remove(m_equipment.weapon->modifier()->id());
   }
 
   m_weapons.add(*m_equipment.weapon);
@@ -54,11 +54,11 @@ void Character::unequipWeapon()
 
 void Character::equipArmor(Armor armor)
 {
-  if (!m_armor.contains(armor)) return;
+  if (!m_armor.contains(armor.id())) return;
 
   unequipArmor();
 
-  m_armor.remove(armor);
+  m_armor.remove(armor.id());
   m_equipment.armor = armor;
 
   if (armor.modifier().has_value())
@@ -73,7 +73,7 @@ void Character::unequipArmor()
 
   if (m_equipment.armor->modifier().has_value())
   {
-    m_modifiers.remove(*m_equipment.armor->modifier());
+    m_modifiers.remove(m_equipment.armor->modifier()->id());
   }
 
   m_armor.add(*m_equipment.armor);
@@ -82,9 +82,9 @@ void Character::unequipArmor()
 
 void Character::useConsumable(Consumable consumable)
 {
-  if (!m_consumables.contains(consumable)) return;
+  if (!m_consumables.contains(consumable.id())) return;
 
-  m_consumables.remove(consumable);
+  m_consumables.remove(consumable.id());
 
   if (consumable.modifier().has_value())
   {
