@@ -9,7 +9,7 @@ namespace Rpg::Concepts
 {
 
 template <typename T>
-concept InventoryItem = requires(const T& item)
+concept ContainerItem = requires(const T& item)
 {
   { item.id() }      -> std::same_as<IdComponent>;
   { item.stack() }   -> std::same_as<StackComponent>;

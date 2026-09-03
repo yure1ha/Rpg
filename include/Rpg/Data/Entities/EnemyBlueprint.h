@@ -19,6 +19,8 @@ struct EnemyBlueprint
   std::optional<Weapon> equippedWeapon;
   std::optional<Armor> equippedArmor;
 
+  std::int32_t typeId {};
+
   std::int32_t baseHealth {};
   std::int32_t effectiveHealth {};
   std::int32_t currentHealth {};

@@ -18,7 +18,7 @@ add_library(Rpg
 
         # Concepts
         include/Rpg/Concepts/AttributeComponent.h
-        include/Rpg/Concepts/InventoryItem.h
+        include/Rpg/Concepts/ContainerItem.h
 
         # Data
         include/Rpg/Data/Entities/CharacterBlueprint.h
@@ -45,6 +45,8 @@ add_library(Rpg
 
         # Factories
         include/Rpg/Factories/IdFactory.h
+        include/Rpg/Factories/EntityFactory.h
+        include/Rpg/Factories/ItemFactory.h
 )
 
 target_include_directories(Rpg PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

@@ -1,6 +1,8 @@
 #include "Helpers.h"
 
 #include "Rpg/Factories/IdFactory.h"
+#include "Rpg/Factories/EntityFactory.h"
+#include "Rpg/Factories/ItemFactory.h"
 
 #include "Rpg/Components/StatusModifierComponent.h"
 #include "Rpg/Components/StackComponent.h"
@@ -13,7 +15,6 @@
 #include "Rpg/Items/Consumable.h"
 #include "Rpg/Items/Weapon.h"
 #include "Rpg/Items/Armor.h"
-
 
 #include "Rpg/Data/Entities/CharacterBlueprint.h"
 #include "Rpg/Data/Entities/EnemyBlueprint.h"
@@ -32,74 +33,80 @@ void runCombatTests()
   IdFactory idFactory;
 
   StatusModifierComponent healthUp {
-    idFactory.create(1000),
+    idFactory.allocate(1000),
     StatusModifierType::Health,
     StackComponent {99, 1},
-    5
+    10
   };
 
   StatusModifierComponent healthDown {
-    idFactory.create(1001),
+    idFactory.allocate(1001),
     StatusModifierType::Health,
     StackComponent {99, 1},
-    -5
+    -10
   };
 
   StatusModifierComponent strengthUp {
-    idFactory.create(1002),
+    idFactory.allocate(1002),
     StatusModifierType::Strength,
     StackComponent {99, 1},
-    5
+    10
   };
 
   StatusModifierComponent strengthDown {
-    idFactory.create(1003),
+    idFactory.allocate(1003),
     StatusModifierType::Strength,
     StackComponent {99, 1},
-    -5
+    -10
   };
 
   StatusModifierComponent defenseUp {
-    idFactory.create(1004),
+    idFactory.allocate(1004),
     StatusModifierType::Defense,
     StackComponent {99, 1},
-    5
+    10
   };
 
   StatusModifierComponent defenseDown {
-    idFactory.create(1005),
+    idFactory.allocate(1005),
     StatusModifierType::Defense,
     StackComponent {99, 1},
-    -5
+    -10
   };
 
-  ConsumableBlueprint goldenAppleBp {
+  ConsumableBlueprint consumableBp {
     .modifier     = healthUp,
+    .typeId       = 100,
     .maxStack     = 99,
     .currentStack = 10,
   };
 
-  WeaponBlueprint longswordBp {
+  WeaponBlueprint weaponBp {
     .modifier          = strengthUp,
+    .typeId            = 101,
     .maxStack          = 1,
     .currentStack      = 1,
-    .baseStrength      = 10,
-    .effectiveStrength = 10,
+    .baseStrength      = 5,
+    .effectiveStrength = 5,
   };
 
-  ArmorBlueprint chainmailBp {
+  ArmorBlueprint armorBp {
     .modifier          = defenseUp,
+    .typeId            = 102,
     .maxStack         = 1,
     .currentStack     = 1,
-    .baseDefense      = 10,
-    .effectiveDefense = 10
+    .baseDefense      = 5,
+    .effectiveDefense = 5
   };
 
-  Consumable goldenApple {idFactory.create(100), goldenAppleBp};
-  Weapon longsword {idFactory.create(101), longswordBp};
-  Armor chainmail {idFactory.create(102), chainmailBp};
+  ItemFactory itemFactory {idFactory};
+  auto consumable {itemFactory.create<Consumable>(consumableBp)};
+  auto weapon {itemFactory.create<Weapon>(weaponBp)};
+  auto armor {itemFactory.create<Armor>(armorBp)};
 
   CharacterBlueprint protagonistBp {
+    .typeId            = 1,
+
     .baseHealth        = 100,
     .effectiveHealth   = 100,
     .currentHealth     = 100,
@@ -112,27 +119,30 @@ void runCombatTests()
   };
 
   EnemyBlueprint antagonistBp {
+    .typeId            = 2,
+
     .baseHealth        = 100,
     .effectiveHealth   = 100,
     .currentHealth     = 100,
 
-    .baseStrength      = 20,
-    .effectiveStrength = 20,
+    .baseStrength      = 50,
+    .effectiveStrength = 50,
 
-    .baseDefense       = 20,
-    .effectiveDefense  = 20
+    .baseDefense       = 30,
+    .effectiveDefense  = 30
   };
 
-  Character protagonist {idFactory.create(1), protagonistBp};
-  Enemy antagonist {idFactory.create(2), antagonistBp};
+  EntityFactory entityFactory {idFactory};
+  auto protagonist {entityFactory.create<Character>(protagonistBp)};
+  auto antagonist {entityFactory.create<Enemy>(antagonistBp)};
 
   printEntity(protagonist);
   printEntity(antagonist);
 
-  protagonist.weapons().add(longsword);
-  protagonist.armor().add(chainmail);
-  protagonist.equipWeapon(longsword);
-  protagonist.equipArmor(chainmail);
+  protagonist.weapons().add(weapon);
+  protagonist.armor().add(armor);
+  protagonist.equipWeapon(weapon);
+  protagonist.equipArmor(armor);
   StatusModifierSystem::updateModifiers(protagonist.modifiers(), protagonist.strength());
   StatusModifierSystem::updateModifiers(protagonist.modifiers(), protagonist.defense());
   printEntity(protagonist);
@@ -140,10 +150,29 @@ void runCombatTests()
   CombatSystem::applyDamage(antagonist, protagonist);
   printEntity(protagonist);
 
-  antagonist.modifiers().add(defenseDown, 2);
+  antagonist.modifiers().add(defenseDown);
   StatusModifierSystem::updateModifiers(antagonist.modifiers(), antagonist.defense());
   CombatSystem::applyDamage(protagonist, antagonist);
   printEntity(antagonist);
+
+  CombatSystem::applyDamage(antagonist, protagonist);
+  printEntity(protagonist);
+
+  protagonist.health().heal(100);
+  printEntity(protagonist);
+
+  antagonist.health().takeDamage(100);
+  printEntity(antagonist);
+
+  protagonist.consumables().add(consumable);
+  protagonist.useConsumable(consumable);
+  StatusModifierSystem::updateModifiers(protagonist.modifiers(), protagonist.health());
+  printEntity(protagonist);
+
+  protagonist.health().reset();
+  protagonist.strength().reset();
+  protagonist.defense().reset();
+  printEntity(protagonist);
 }
 
 } // namespace Rpg::Tests

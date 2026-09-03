@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Rpg/Concepts/InventoryItem.h"
 #include "Rpg/Components/IdComponent.h"
+#include "Rpg/Concepts/ContainerItem.h"
 
 #include <algorithm>
 #include <cstdint>
@@ -11,7 +11,7 @@
 namespace Rpg
 {
 
-template <Concepts::InventoryItem T>
+template <Concepts::ContainerItem T>
 class ContainerComponent
 {
 public:
@@ -32,7 +32,7 @@ public:
   {
     return std::ranges::any_of(m_items, [id](const T& comp)
     {
-      return id.typeId == comp.id().typeId;
+      return id == comp.id();
     });
   }
 
